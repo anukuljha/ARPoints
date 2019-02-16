@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A34C67412218168800342ABC /* What_Is_URL.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A34C67402218168800342ABC /* What_Is_URL.jpg */; };
 		AF9B657820AE4A140076666A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9B657720AE4A140076666A /* AppDelegate.swift */; };
 		AF9B657A20AE4A140076666A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9B657920AE4A140076666A /* ViewController.swift */; };
 		AF9B657D20AE4A140076666A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9B657B20AE4A140076666A /* Main.storyboard */; };
 		AF9B657F20AE4A150076666A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF9B657E20AE4A150076666A /* Assets.xcassets */; };
 		AF9B658220AE4A150076666A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9B658020AE4A150076666A /* LaunchScreen.storyboard */; };
 		AF9B658A20AE4C010076666A /* ARSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9B658920AE4C010076666A /* ARSettings.swift */; };
+		C29C87BBF3926429DB890BEC /* Pods_ARPoints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D32E9803FBD1945D0C0A49 /* Pods_ARPoints.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37D32E9803FBD1945D0C0A49 /* Pods_ARPoints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPoints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C7A572F3EA12159773EEB24 /* Pods-ARPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPoints.debug.xcconfig"; path = "Target Support Files/Pods-ARPoints/Pods-ARPoints.debug.xcconfig"; sourceTree = "<group>"; };
+		A34C67402218168800342ABC /* What_Is_URL.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = What_Is_URL.jpg; path = ../../../Downloads/What_Is_URL.jpg; sourceTree = "<group>"; };
+		A34C67422218169A00342ABC /* What_Is_URL.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = What_Is_URL.jpg; sourceTree = "<group>"; };
 		AF9B657420AE4A140076666A /* ARPoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF9B657720AE4A140076666A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF9B657920AE4A140076666A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +30,7 @@
 		AF9B658120AE4A150076666A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF9B658320AE4A150076666A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF9B658920AE4C010076666A /* ARSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARSettings.swift; sourceTree = "<group>"; };
+		C9BE3137FCB1F7356C13A38A /* Pods-ARPoints.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPoints.release.xcconfig"; path = "Target Support Files/Pods-ARPoints/Pods-ARPoints.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +38,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29C87BBF3926429DB890BEC /* Pods_ARPoints.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4CF1498331638F8DECAE34DA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6C7A572F3EA12159773EEB24 /* Pods-ARPoints.debug.xcconfig */,
+				C9BE3137FCB1F7356C13A38A /* Pods-ARPoints.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		AF9B656B20AE4A140076666A = {
 			isa = PBXGroup;
 			children = (
+				A34C67402218168800342ABC /* What_Is_URL.jpg */,
 				AF9B657620AE4A140076666A /* ARPoints */,
 				AF9B657520AE4A140076666A /* Products */,
+				4CF1498331638F8DECAE34DA /* Pods */,
+				C9C1CDF828030276AD9FE5AE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,6 +79,7 @@
 				AFF3EBC920AECB6A00D8835D /* Extensions */,
 				AF9B657720AE4A140076666A /* AppDelegate.swift */,
 				AF9B657920AE4A140076666A /* ViewController.swift */,
+				A34C67422218169A00342ABC /* What_Is_URL.jpg */,
 				AF9B657B20AE4A140076666A /* Main.storyboard */,
 				AF9B657E20AE4A150076666A /* Assets.xcassets */,
 				AF9B658020AE4A150076666A /* LaunchScreen.storyboard */,
@@ -75,6 +96,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C9C1CDF828030276AD9FE5AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37D32E9803FBD1945D0C0A49 /* Pods_ARPoints.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +111,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF9B658620AE4A150076666A /* Build configuration list for PBXNativeTarget "ARPoints" */;
 			buildPhases = (
+				D89D622DD65DA13C9CF3820B /* [CP] Check Pods Manifest.lock */,
 				AF9B657020AE4A140076666A /* Sources */,
 				AF9B657120AE4A140076666A /* Frameworks */,
 				AF9B657220AE4A140076666A /* Resources */,
+				132F767D0853B35847E11A08 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -107,6 +138,7 @@
 				TargetAttributes = {
 					AF9B657320AE4A140076666A = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -136,10 +168,58 @@
 				AF9B658220AE4A150076666A /* LaunchScreen.storyboard in Resources */,
 				AF9B657F20AE4A150076666A /* Assets.xcassets in Resources */,
 				AF9B657D20AE4A140076666A /* Main.storyboard in Resources */,
+				A34C67412218168800342ABC /* What_Is_URL.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		132F767D0853B35847E11A08 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ARPoints/Pods-ARPoints-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ARPoints/Pods-ARPoints-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D89D622DD65DA13C9CF3820B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARPoints-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF9B657020AE4A140076666A /* Sources */ = {
@@ -290,36 +370,38 @@
 		};
 		AF9B658720AE4A150076666A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C7A572F3EA12159773EEB24 /* Pods-ARPoints.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DHKEQ8PRAX;
+				DEVELOPMENT_TEAM = 5XDKJTP73N;
 				INFOPLIST_FILE = ARPoints/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.uk.blackMirrorz.ARPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anukul;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		AF9B658820AE4A150076666A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9BE3137FCB1F7356C13A38A /* Pods-ARPoints.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DHKEQ8PRAX;
+				DEVELOPMENT_TEAM = 5XDKJTP73N;
 				INFOPLIST_FILE = ARPoints/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = co.uk.blackMirrorz.ARPoints;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anukul;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

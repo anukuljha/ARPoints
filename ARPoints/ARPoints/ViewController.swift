@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import Alamofire
 
 extension ViewController: ARSCNViewDelegate{
     
@@ -17,8 +18,14 @@ extension ViewController: ARSCNViewDelegate{
         guard let currentFrame = self.augmentedRealitySession.currentFrame,
              let featurePointsArray = currentFrame.rawFeaturePoints?.points else { return }
         
+        guard let pointOfView = self.augmentedRealityView.pointOfView else {return}
+        let transform = pointOfView.transform
+        //let orientation = SCNVector3(-transform.m31, -transform.m32, transform.m33)
+        let location = SCNVector3(transform.m41, transform.m42, transform.m43)
+        let currentPositionOfCamera = location
+        
         //2. Visualize The Feature Points
-        visualizeFeaturePointsIn(featurePointsArray)
+        visualizeFeaturePointsIn(featurePointsArray,currentPositionOfCamera)
         
         //3. Update Our Status View
         DispatchQueue.main.async {
@@ -40,7 +47,7 @@ extension ViewController: ARSCNViewDelegate{
     /// Provides Visualization Of Raw Feature Points Detected In The ARSessopm
     ///
     /// - Parameter featurePointsArray: [vector_float3]
-    func visualizeFeaturePointsIn(_ featurePointsArray: [vector_float3]){
+    func visualizeFeaturePointsIn(_ featurePointsArray: [vector_float3],_ currentPositionOfCamera:SCNVector3){
         
         //1. Remove Any Existing Nodes
         self.augmentedRealityView.scene.rootNode.enumerateChildNodes { (featurePoint, _) in
@@ -48,22 +55,45 @@ extension ViewController: ARSCNViewDelegate{
             featurePoint.geometry = nil
             featurePoint.removeFromParentNode()
         }
+        //3. Loop Through The Feature Points & Add Them To The Hierachy
+        var mindist = 10000.0
+        featurePointsArray.forEach { (pointLocation) in
+            
+            //Clone The SphereNode To Reduce CPU
+            
+            let clone = sphereNode.clone()
+            clone.position = SCNVector3(pointLocation.x, pointLocation.y, pointLocation.z)
+            let distance = clone.position - currentPositionOfCamera
+            let length = distance.length()
+            if length <= Float(mindist){
+                mindist = Double(length)
+            }
+            self.augmentedRealityView.scene.rootNode.addChildNode(clone)
+        }
         
         //2. Update Our Label Which Displays The Count Of Feature Points
         DispatchQueue.main.async {
             self.rawFeaturesLabel.text = self.Feature_Label_Prefix + String(featurePointsArray.count)
+            self.distance.text=String(mindist)
         }
         
-        //3. Loop Through The Feature Points & Add Them To The Hierachy
-        featurePointsArray.forEach { (pointLocation) in
-            
-            //Clone The SphereNode To Reduce CPU
-            let clone = sphereNode.clone()
-            clone.position = SCNVector3(pointLocation.x, pointLocation.y, pointLocation.z)
-            self.augmentedRealityView.scene.rootNode.addChildNode(clone)
-        }
+        
+//        //3. Loop Through The Feature Points & Add Them To The Hierachy
+//        featurePointsArray.forEach { (pointLocation) in
+//
+//            //Clone The SphereNode To Reduce CPU
+//
+//            let clone = sphereNode.clone()
+//            clone.position = SCNVector3(pointLocation.x, pointLocation.y, pointLocation.z)
+//            self.augmentedRealityView.scene.rootNode.addChildNode(clone)
+//        }
 
     }
+    
+    
+
+    
+
   
 }
 
@@ -72,6 +102,7 @@ class ViewController: UIViewController {
     //1. Create A Reference To Our ARSCNView In Our Storyboard Which Displays The Camera Feed
     @IBOutlet weak var augmentedRealityView: ARSCNView!
     
+    @IBOutlet weak var distance: UITextView!
     //2. Create A Reference To Our ARSCNView In Our Storyboard Which Will Display The ARSession Tracking Status
     @IBOutlet weak var sessionLabelView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
@@ -79,9 +110,22 @@ class ViewController: UIViewController {
     @IBOutlet var settingsConstraint: NSLayoutConstraint!
     var Feature_Label_Prefix = "Number Of Raw Feature Points Detected = "
     
+
+    
     //3. Create Our ARWorld Tracking Configuration
     let configuration = ARWorldTrackingConfiguration()
     
+    @IBAction func describeButton(_ sender: Any) {
+        let _url = "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe"
+        let image = augmentedRealityView.snapshot()
+        let parameters = "abc"
+        var header: HTTPHeaders = [HTTPHeader(name: "X-RapidAPI-Key", value: "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00")]
+        //header.add(HTTPHeader(name:"Content-Type", value: "application/json"))
+        AF.request(_url, method: .post, parameters: parameters, headers: header).responseJSON { response in
+            print("🦄")
+            print(response)
+        }
+    }
     //4. Create Our Session
     let augmentedRealitySession = ARSession()
     
@@ -93,11 +137,11 @@ class ViewController: UIViewController {
     //--------------------
     
     override func viewDidLoad() {
-        
+        augmentedRealityView.snapshot()
         super.viewDidLoad()
-        
         generateNode()
         setupARSession()
+        augmentedRealityView.snapshot()
 
     }
     
@@ -111,7 +155,7 @@ class ViewController: UIViewController {
     
     
     /// Generates A Spherical SCNNode
-    func generateNode(){
+    func generateNode() {
         sphereNode = SCNNode()
         let sphereGeometry = SCNSphere(radius: 0.001)
         sphereGeometry.firstMaterial?.diffuse.contents = UIColor.cyan
@@ -137,4 +181,18 @@ class ViewController: UIViewController {
         
     }
 }
+
+func +(lhv:SCNVector3, rhv:SCNVector3) -> SCNVector3 {
+    return SCNVector3(lhv.x + rhv.x, lhv.y + rhv.y, lhv.z + rhv.z)
+}
+
+extension SCNVector3 {
+    func length() -> Float {
+        return sqrtf(x * x + y * y + z * z)
+    }
+}
+func - (l: SCNVector3, r: SCNVector3) -> SCNVector3 {
+    return SCNVector3Make(l.x - r.x, l.y - r.y, l.z - r.z)
+}
+
 

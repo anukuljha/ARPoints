@@ -1,11 +1,3 @@
-//
-//  ARSettings.swift
-//  ARKit By Example
-//
-//  Created by Josh Robbins on 17/02/2018.
-//  Copyright © 2018 BlackMirrorz. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import ARKit
@@ -79,11 +71,11 @@ extension UIViewController{
         switch options {
             
         case .FeaturePoints:
-            return [ARSCNDebugOptions.showFeaturePoints]
+            return [SCNDebugOptions.showFeaturePoints]
         case .WorldOrigin:
-            return [ARSCNDebugOptions.showWorldOrigin]
+            return [SCNDebugOptions.showWorldOrigin]
         case .Both:
-            return [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+            return [SCNDebugOptions.showFeaturePoints, SCNDebugOptions.showWorldOrigin]
         case .None:
             return []
         }

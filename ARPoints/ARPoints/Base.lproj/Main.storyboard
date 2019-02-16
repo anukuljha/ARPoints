@@ -73,6 +73,22 @@
                                     <action selector="describeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2eC-gM-eQp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzO-rZ-0Ez">
+                                <rect key="frame" x="157" y="605" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Distance"/>
+                                <connections>
+                                    <action selector="getDistance:" destination="BYZ-38-t0r" eventType="touchUpInside" id="31h-nb-8wM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIc-1Z-qBT">
+                                <rect key="frame" x="164" y="92" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="SOS"/>
+                                <connections>
+                                    <action selector="requestHelp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M1E-pD-ndE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

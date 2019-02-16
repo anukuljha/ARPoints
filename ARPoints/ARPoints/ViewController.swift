@@ -1,17 +1,12 @@
-//
-//  ViewController.swift
-//  ARPoints
-//
-//  Created by Josh Robbins on 18/05/2018.
-//  Copyright © 2018 BlackMirrorz. All rights reserved.
-//
-
 import UIKit
 import ARKit
 import Alamofire
 import Firebase
 import AVFoundation
 import AVKit
+import CoreLocation
+
+var nearestDistance = 0.0
 
 extension ViewController: ARSCNViewDelegate{
     
@@ -78,34 +73,49 @@ extension ViewController: ARSCNViewDelegate{
         DispatchQueue.main.async {
             self.rawFeaturesLabel.text = self.Feature_Label_Prefix + String(featurePointsArray.count)
             self.distance.text=String(mindist)
+            nearestDistance = mindist
         }
         
-        
-//        //3. Loop Through The Feature Points & Add Them To The Hierachy
-//        featurePointsArray.forEach { (pointLocation) in
-//
-//            //Clone The SphereNode To Reduce CPU
-//
-//            let clone = sphereNode.clone()
-//            clone.position = SCNVector3(pointLocation.x, pointLocation.y, pointLocation.z)
-//            self.augmentedRealityView.scene.rootNode.addChildNode(clone)
-//        }
 
     }
-    
-    
-
-    
-
   
 }
 
 var storageRef = Storage.storage().reference()
 
-class ViewController: UIViewController {
-    
-    
 
+var lat = 0.0
+var lon = 0.0
+
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var locationManager: CLLocationManager!
+    
+    @IBAction func getDistance(_ sender: Any) {
+        let utterance = AVSpeechUtterance(string: "Nearest object in current direction is " + String(Float(roundf(Float(nearestDistance * 100))/100)) + "metres away")
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        utterance.rate = 0.5
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+    }
+    
+    @IBAction func requestHelp(_ sender: Any) {
+        let utterance = AVSpeechUtterance(string: "Requesting help now")
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        utterance.rate = 0.5
+        
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.speak(utterance)
+        ARPoints.requestHelp(name: "Anukul", phoneNumber: "817027939472")
+        
+        let utterance2 = AVSpeechUtterance(string: "SMS sent for help")
+        utterance2.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        utterance2.rate = 0.5
+        let synthesizer2 = AVSpeechSynthesizer()
+        synthesizer2.speak(utterance2)
+
+    }
     //1. Create A Reference To Our ARSCNView In Our Storyboard Which Displays The Camera Feed
     @IBOutlet weak var augmentedRealityView: ARSCNView!
     
@@ -131,7 +141,7 @@ class ViewController: UIViewController {
 //        }
 //
         let image = augmentedRealityView.snapshot()
-        sendImage(data: image.jpegData(compressionQuality: 0.1)!, timeStamp: String(IntegerLiteralType(NSDate().timeIntervalSince1970 * 1000)))
+        sendImage(data: image.jpegData(compressionQuality: 0.05)!, timeStamp: String(IntegerLiteralType(NSDate().timeIntervalSince1970 * 1000)))
 
     }
     //4. Create Our Session
@@ -145,13 +155,56 @@ class ViewController: UIViewController {
     //--------------------
     
     override func viewDidLoad() {
-        augmentedRealityView.snapshot()
         super.viewDidLoad()
         generateNode()
         setupARSession()
-        augmentedRealityView.snapshot()
-
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        
+        let single_tap = UITapGestureRecognizer(target: self, action: #selector(singleTapped))
+        single_tap.numberOfTapsRequired = 1
+        
+        view.addGestureRecognizer(single_tap)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
+        
+        single_tap.require(toFail: tap)
+        
+        //add long press gesture
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(gesture:)))
+        longPressGesture.minimumPressDuration = 5
+        self.view.addGestureRecognizer(longPressGesture)
+        
+        determineMyCurrentLocation()
+        
+        view.backgroundColor = UIColor.gray
     }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool{
+        return true
+    }
+    @objc func doubleTapped() {
+        print("double tapped")
+        describeButton("double tap")
+    }
+    
+    @objc func singleTapped() {
+        print("single tapped")
+        getDistance("single tap")
+    }
+    
+    @objc func longPressed(gesture:UIGestureRecognizer) {
+        
+        print("long pressed")
+        if gesture.state == .ended{
+        requestHelp("long Pressed")
+        }
+    }
+    
     
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -187,6 +240,39 @@ class ViewController: UIViewController {
         self.rawFeaturesLabel.text = ""
        
         
+    }
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        
+        //manager.stopUpdatingLocation()
+        
+        print("user latitude = \(userLocation.coordinate.latitude)")
+        print("user longitude = \(userLocation.coordinate.longitude)")
+        
+        lat = userLocation.coordinate.latitude
+        lon = userLocation.coordinate.longitude
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
     }
 }
 
@@ -228,14 +314,18 @@ func getAudio(timeStamp: String) {
 }
 
 var player:AVPlayer?
-var playerItem:AVPlayerItem?
 
 func playAudio(timeStamp: String) {
     let playerItem = AVPlayerItem(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/kouzoh-p-anukul.appspot.com/o/audio%2F"+timeStamp+".mp3?alt=media&token=163d43d9-589e-4bc4-ac55-5237b72a5078")! )
     player = AVPlayer(playerItem: playerItem)
+    player?.rate = 0.8
     player?.play()
-//    let url = URL(string: "https://s3.amazonaws.com/kargopolov/kukushka.mp3")
-//    let playerItem:AVPlayerItem = AVPlayerItem(url: url!)
-//    player = AVPlayer(playerItem: playerItem)
-//    player?.play()
+}
+
+func requestHelp(name: String, phoneNumber: String) {
+    let url = "https://us-central1-kouzoh-p-anukul.cloudfunctions.net/sendMessage?from="+name+"&to="+phoneNumber+"&text=help" + "http://www.google.com/maps/place/" + "\(lat)" + "," + "\(lon)"
+    print()
+    AF.request(url).responseJSON{response in
+        print(response)
+    }
 }

@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'ARPoints' do
   pod 'Alamofire', '~> 5.0.0-beta.2'
+  pod 'Firebase/Core'
 end

@@ -116,15 +116,43 @@ class ViewController: UIViewController {
     let configuration = ARWorldTrackingConfiguration()
     
     @IBAction func describeButton(_ sender: Any) {
-        let _url = "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe"
-        let image = augmentedRealityView.snapshot()
-        let parameters = "abc"
-        var header: HTTPHeaders = [HTTPHeader(name: "X-RapidAPI-Key", value: "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00")]
-        //header.add(HTTPHeader(name:"Content-Type", value: "application/json"))
-        AF.request(_url, method: .post, parameters: parameters, headers: header).responseJSON { response in
-            print("🦄")
-            print(response)
+        
+        
+        let apiKey = "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"
+        var apiURL: URL {
+            return URL(string: "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe")!
         }
+        
+        let image = augmentedRealityView.snapshot()
+        guard let base64Image = base64EncodeImage(image) else {
+            print("Error while base64 encoding image")
+            return
+        }
+        
+        let parameters: Parameters = [
+                    "file":base64Image ]
+        let headers: HTTPHeaders = [
+            "X-RapidAPI-Key": apiKey
+            ]
+        AF.request(
+            apiURL,
+            method: .post,
+            parameters: parameters,
+            encoding: JSONEncoding.default,
+            headers: headers)
+            .responseJSON { response in
+                if response.result.isFailure {
+                    return
+                }
+                print(response.result.debugDescription)
+        }
+//        let parameters: Parameters = ["file" : ?image.file]
+//        let header: HTTPHeaders = [HTTPHeader(name: "X-RapidAPI-Key", value: "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"), HTT]
+//        //header.add(HTTPHeader(name:"Content-Type", value: "application/json"))
+//        AF.request(_url, method: .post, parameters: parameters, headers: header).responseJSON { response in
+//            print("🦄")
+//            print(response)
+//        }
     }
     //4. Create Our Session
     let augmentedRealitySession = ARSession()
@@ -196,3 +224,6 @@ func - (l: SCNVector3, r: SCNVector3) -> SCNVector3 {
 }
 
 
+func base64EncodeImage(_ image: UIImage) -> String? {
+    return image.pngData()?.base64EncodedString(options: .endLineWithCarriageReturn)
+}

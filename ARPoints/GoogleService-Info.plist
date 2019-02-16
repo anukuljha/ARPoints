@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>98830575978-sbtt1727em3b4uea4car2nbjdu0qrt9l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.98830575978-sbtt1727em3b4uea4car2nbjdu0qrt9l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyClA9Svt3z3TwpMP9pdmuIpLQR7J0S21fY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>98830575978</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.anukul</string>
+	<key>PROJECT_ID</key>
+	<string>kouzoh-p-anukul</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kouzoh-p-anukul.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:98830575978:ios:86069851b9c09ae8</string>
+	<key>DATABASE_URL</key>
+	<string>https://kouzoh-p-anukul.firebaseio.com</string>
+</dict>
+</plist>

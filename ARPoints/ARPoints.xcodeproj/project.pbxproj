@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A34C67412218168800342ABC /* What_Is_URL.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A34C67402218168800342ABC /* What_Is_URL.jpg */; };
+		A37D8C692218391E00FEFA2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A37D8C682218391E00FEFA2B /* GoogleService-Info.plist */; };
 		AF9B657820AE4A140076666A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9B657720AE4A140076666A /* AppDelegate.swift */; };
 		AF9B657A20AE4A140076666A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9B657920AE4A140076666A /* ViewController.swift */; };
 		AF9B657D20AE4A140076666A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9B657B20AE4A140076666A /* Main.storyboard */; };
@@ -20,8 +20,8 @@
 /* Begin PBXFileReference section */
 		37D32E9803FBD1945D0C0A49 /* Pods_ARPoints.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARPoints.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C7A572F3EA12159773EEB24 /* Pods-ARPoints.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARPoints.debug.xcconfig"; path = "Target Support Files/Pods-ARPoints/Pods-ARPoints.debug.xcconfig"; sourceTree = "<group>"; };
-		A34C67402218168800342ABC /* What_Is_URL.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = What_Is_URL.jpg; path = ../../../Downloads/What_Is_URL.jpg; sourceTree = "<group>"; };
 		A34C67422218169A00342ABC /* What_Is_URL.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = What_Is_URL.jpg; sourceTree = "<group>"; };
+		A37D8C682218391E00FEFA2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF9B657420AE4A140076666A /* ARPoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARPoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF9B657720AE4A140076666A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF9B657920AE4A140076666A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,7 +57,6 @@
 		AF9B656B20AE4A140076666A = {
 			isa = PBXGroup;
 			children = (
-				A34C67402218168800342ABC /* What_Is_URL.jpg */,
 				AF9B657620AE4A140076666A /* ARPoints */,
 				AF9B657520AE4A140076666A /* Products */,
 				4CF1498331638F8DECAE34DA /* Pods */,
@@ -76,6 +75,7 @@
 		AF9B657620AE4A140076666A /* ARPoints */ = {
 			isa = PBXGroup;
 			children = (
+				A37D8C682218391E00FEFA2B /* GoogleService-Info.plist */,
 				AFF3EBC920AECB6A00D8835D /* Extensions */,
 				AF9B657720AE4A140076666A /* AppDelegate.swift */,
 				AF9B657920AE4A140076666A /* ViewController.swift */,
@@ -166,9 +166,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF9B658220AE4A150076666A /* LaunchScreen.storyboard in Resources */,
+				A37D8C692218391E00FEFA2B /* GoogleService-Info.plist in Resources */,
 				AF9B657F20AE4A150076666A /* Assets.xcassets in Resources */,
 				AF9B657D20AE4A140076666A /* Main.storyboard in Resources */,
-				A34C67412218168800342ABC /* What_Is_URL.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,12 +185,16 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ARPoints/Pods-ARPoints-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

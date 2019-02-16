@@ -9,6 +9,9 @@
 import UIKit
 import ARKit
 import Alamofire
+import Firebase
+import AVFoundation
+import AVKit
 
 extension ViewController: ARSCNViewDelegate{
     
@@ -97,7 +100,11 @@ extension ViewController: ARSCNViewDelegate{
   
 }
 
+var storageRef = Storage.storage().reference()
+
 class ViewController: UIViewController {
+    
+    
 
     //1. Create A Reference To Our ARSCNView In Our Storyboard Which Displays The Camera Feed
     @IBOutlet weak var augmentedRealityView: ARSCNView!
@@ -118,41 +125,14 @@ class ViewController: UIViewController {
     @IBAction func describeButton(_ sender: Any) {
         
         
-        let apiKey = "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"
-        var apiURL: URL {
-            return URL(string: "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe")!
-        }
-        
-        let image = augmentedRealityView.snapshot()
-        guard let base64Image = base64EncodeImage(image) else {
-            print("Error while base64 encoding image")
-            return
-        }
-        
-        let parameters: Parameters = [
-                    "file":base64Image ]
-        let headers: HTTPHeaders = [
-            "X-RapidAPI-Key": apiKey
-            ]
-        AF.request(
-            apiURL,
-            method: .post,
-            parameters: parameters,
-            encoding: JSONEncoding.default,
-            headers: headers)
-            .responseJSON { response in
-                if response.result.isFailure {
-                    return
-                }
-                print(response.result.debugDescription)
-        }
-//        let parameters: Parameters = ["file" : ?image.file]
-//        let header: HTTPHeaders = [HTTPHeader(name: "X-RapidAPI-Key", value: "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"), HTT]
-//        //header.add(HTTPHeader(name:"Content-Type", value: "application/json"))
-//        AF.request(_url, method: .post, parameters: parameters, headers: header).responseJSON { response in
-//            print("🦄")
-//            print(response)
+//        let apiKey = "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"
+//        var apiURL: URL {
+//            return URL(string: "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe")!
 //        }
+//
+        let image = augmentedRealityView.snapshot()
+        sendImage(data: image.jpegData(compressionQuality: 0.1)!, timeStamp: String(IntegerLiteralType(NSDate().timeIntervalSince1970 * 1000)))
+
     }
     //4. Create Our Session
     let augmentedRealitySession = ARSession()
@@ -226,4 +206,36 @@ func - (l: SCNVector3, r: SCNVector3) -> SCNVector3 {
 
 func base64EncodeImage(_ image: UIImage) -> String? {
     return image.pngData()?.base64EncodedString(options: .endLineWithCarriageReturn)
+}
+
+func sendImage(data: Data, timeStamp: String) {
+    let uploadTask = getImageRef(timeStamp: timeStamp).putData(data, metadata: nil)
+    let observer = uploadTask.observe(.success, handler: { (snapshot) in
+        getAudio(timeStamp: timeStamp)
+    })
+}
+
+func getImageRef(timeStamp: String) -> StorageReference {
+    return storageRef.child("images/"+timeStamp+".jpg")
+}
+
+func getAudio(timeStamp: String) {
+    let url: String = "https://us-central1-kouzoh-p-anukul.cloudfunctions.net/getDescription?id=" + timeStamp
+    AF.request(url).responseJSON{response in
+        print(response)
+        playAudio(timeStamp: timeStamp)
+    }
+}
+
+var player:AVPlayer?
+var playerItem:AVPlayerItem?
+
+func playAudio(timeStamp: String) {
+    let playerItem = AVPlayerItem(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/kouzoh-p-anukul.appspot.com/o/audio%2F"+timeStamp+".mp3?alt=media&token=163d43d9-589e-4bc4-ac55-5237b72a5078")! )
+    player = AVPlayer(playerItem: playerItem)
+    player?.play()
+//    let url = URL(string: "https://s3.amazonaws.com/kargopolov/kukushka.mp3")
+//    let playerItem:AVPlayerItem = AVPlayerItem(url: url!)
+//    player = AVPlayer(playerItem: playerItem)
+//    player?.play()
 }

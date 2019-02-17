@@ -71,8 +71,8 @@ extension ViewController: ARSCNViewDelegate{
         
         //2. Update Our Label Which Displays The Count Of Feature Points
         DispatchQueue.main.async {
-            self.rawFeaturesLabel.text = self.Feature_Label_Prefix + String(featurePointsArray.count)
-            self.distance.text=String(mindist)
+//            self.rawFeaturesLabel.text = self.Feature_Label_Prefix + String(featurePointsArray.count)
+            self.distance.text=String(Float(roundf(Float(mindist * 100))/100))
             nearestDistance = mindist
         }
         
@@ -91,8 +91,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!
     
-    @IBAction func getDistance(_ sender: Any) {
-        let utterance = AVSpeechUtterance(string: "Nearest object in current direction is " + String(Float(roundf(Float(nearestDistance * 100))/100)) + "metres away")
+    func getDistance(_ sender: Any) {
+        let utterance = AVSpeechUtterance(string: "Nearest object in this direction is " + String(Float(roundf(Float(nearestDistance * 100))/100)) + "metres away")
         utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
         utterance.rate = 0.5
         
@@ -100,7 +100,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         synthesizer.speak(utterance)
     }
     
-    @IBAction func requestHelp(_ sender: Any) {
+    func requestHelp(_ sender: Any) {
         let utterance = AVSpeechUtterance(string: "Requesting help now")
         utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
         utterance.rate = 0.5
@@ -132,14 +132,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //3. Create Our ARWorld Tracking Configuration
     let configuration = ARWorldTrackingConfiguration()
     
-    @IBAction func describeButton(_ sender: Any) {
+    func describeButton(_ sender: Any) {
         
-        
-//        let apiKey = "08b38133edmshed8c3d86747b48ep1841aajsn216945825c00"
-//        var apiURL: URL {
-//            return URL(string: "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/describe")!
-//        }
-//
         let image = augmentedRealityView.snapshot()
         sendImage(data: image.jpegData(compressionQuality: 0.05)!, timeStamp: String(IntegerLiteralType(NSDate().timeIntervalSince1970 * 1000)))
 
@@ -236,8 +230,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         configuration.planeDetection = [planeDetection(.None)]
         augmentedRealitySession.run(configuration, options: runOptions(.ResetAndRemove))
-        
-        self.rawFeaturesLabel.text = ""
        
         
     }
@@ -323,7 +315,7 @@ func playAudio(timeStamp: String) {
 }
 
 func requestHelp(name: String, phoneNumber: String) {
-    let url = "https://us-central1-kouzoh-p-anukul.cloudfunctions.net/sendMessage?from="+name+"&to="+phoneNumber+"&text=help" + "http://www.google.com/maps/place/" + "\(lat)" + "," + "\(lon)"
+    let url = "https://us-central1-kouzoh-p-anukul.cloudfunctions.net/sendMessage?from="+name+"&to="+phoneNumber+"&text=I'm a little lost. Please find me here: " + "http://www.google.com/maps/place/" + "\(lat)" + "," + "\(lon)"
     print()
     AF.request(url).responseJSON{response in
         print(response)
